@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Google search selected text
+#
+###
+
+GS=`xclip -o`
+firefox http://www.google.com/search?q="$GS"
