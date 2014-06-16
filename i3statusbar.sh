@@ -5,7 +5,7 @@
 ###
 
 
-mpd_status() {
+mpd_stat() {
   song=$(mpc current)
   pausetest=$( mpc | sed -n 2p )
   if [[ $pausetest == [paused* ]]; then
@@ -14,13 +14,15 @@ mpd_status() {
   echo $song  
 }
 
-battery_status() {
+battery_stat() {
   battery=$(acpi -b | sed -n 's/.*\([0-9][0-9]:[0-9][0-9]\):[0-9][0-9].*/\1/p')
   dischargetest=$(acpi -b | awk '{print $3}')
   if [[ $dischargetest == Discharging* ]]; then
     battery="-$battery"
   elif [[ $dischargetest == Charging* ]]; then
     battery="+$battery"
+  elif [[ $dischargetest == Full* ]]; then
+    battery="100%"
   elif [[ $dischargetest == Unknown* ]]; then
     battery=$(acpi -b | awk '{print $4}')
   else
@@ -29,7 +31,7 @@ battery_status() {
   echo $battery
 }
 
-sound_status() {
+sound_stat() {
   sound=$(amixer get Master | grep -o '[0-9]*%')  
   mutetest=$(amixer get Master | grep -o 'off')  
   if [[ $mutetest == 'off' ]]; then  
@@ -38,11 +40,22 @@ sound_status() {
   echo $sound
 }
 
+ram_stat() {
+  ram=$(free | grep Mem | awk '{print $3/$2 * 100}' | sed 's/[.].*$//')
+  echo ${ram}%
+}
+
+date_stat() {
+  echo $(date '+%m/%d | %I:%M')
+}
+
+wifi_stat() {
+  echo $(iwconfig wlp3s0 | awk '/Quality/{print $2}' | sed 's/.*=//' | awk -F"/" '{printf("%.0f%%", $1/$2*100)}')
+}
+
+
 while :;
 do
-  wireless=$(iwconfig wlp3s0 | awk '/Quality/{print $2}' | sed 's/.*=//' | awk -F"/" '{printf("%.0f%%", $1/$2*100)}')
-  ram=$(free | grep Mem | awk '{print $3/$2 * 100}' | sed 's/[.].*$//')
-  date=$(date '+%m/%d | %I:%M')
-  echo -n $(mpd_status) '| Wireless' $wireless '| Battery' $(battery_status) '| Volume' $(sound_status) ' | RAM' $ram'%' '|' $date
+  echo -n $(mpd_stat) '| Wireless' $(wifi_stat) '| Battery' $(battery_stat) '| Volume' $(sound_stat) '| RAM' $(ram_stat) '|' $(date_stat)
   sleep 1
 done
