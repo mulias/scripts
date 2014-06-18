@@ -21,6 +21,8 @@ battery_status() {
     battery="-$battery"
   elif [[ $dischargetest == Charging* ]]; then
     battery="+$battery"
+  elif [[ $dischargetest == Full* ]]; then
+    battery="100%"
   elif [[ $dischargetest == Unknown* ]]; then
     battery=$(acpi -b | awk '{print $4}')
   else
