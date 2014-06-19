@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# make a new plain text file in the notes directory
+#
+###
+
+NOTES=~/Documents/notes/
+DATE=$(date +%Y_%m_%d)
+STAMP=$(date +%s)
+
+for arg in "$@"
+do
+  case "$arg" in
+    "-l" ) list=true
+      ;;
+    "-d" ) date=true
+      ;;
+    "-t" ) timestamp=true
+      ;;
+    * )    name=$arg
+  esac
+done
+
+if [ "$list" ]; then
+  cd $NOTES
+  for itm in *
+  do
+    echo $itm
+  done
+  exit 0
+fi
+
+# if no file name is given then default to note_${DATE}
+if [[ "$name" == "" ]]; then
+  file=${NOTES}note_${DATE}
+else
+  file=${NOTES}${name}
+  if [ "$date" ]; then
+    file=${file}_${DATE_SET}
+  fi
+  if [ "$timestamp" ]; then
+    file=${file}_${STAMP_SET}
+  fi
+fi
+
+$EDITOR $file
+
+exit 0
