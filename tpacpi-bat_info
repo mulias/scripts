@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# lists thinkpad battery settings changed by tpacpi-bat
+#
+###
+
+low=$(tpacpi-bat -g ST 1)
+up=$(tpacpi-bat -g SP 1)
+fd=$(tpacpi-bat -g FD 1)
+ic=$(tpacpi-bat -g IC 1)
+
+echo Lower Threshold: $(echo "$low" | awk '{print $1}')
+echo Upper Threshold: $(echo "$up" | awk '{print $1}')
+echo Force Discharge: $fd
+echo Inhibit Charge: $ic
+
+exit 0
