@@ -4,5 +4,6 @@
 #
 ###
 
-GS=`xclip -o`
-firefox http://www.google.com/search?q="$GS"
+clip=$(xclip -o)
+gs=$(echo -ne "$clip" | xxd -plain | tr -d '\n' | sed 's/\(..\)/%\1/g')
+firefox http://www.google.com/search?q="$gs"
