@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# if there is visible stuff in the directory, just run ls
+# if there is no visible stuff, but there is hidden stuff, run ls -a
+#
+###
+
+com='ls --color=auto -1 --group-directories-first'
+vnum=$(ls -1 | wc -l)
+hnum=$(ls -1a | wc -l)
+
+if [[ $vnum  > 0 ]]; then
+  exec $com
+elif [[ $hnum > 2 ]]; then
+  exec $com -a
+fi
+
+exit 0
+  
