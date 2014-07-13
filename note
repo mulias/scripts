@@ -1,48 +1,40 @@
 #!/bin/bash
 #
-# make a new plain text file in the notes directory
+# Make and edit a new plain text file in the notes directory
+#
+# note [OPTION] ... [FILE]
+#
+#   -l to list all notes
+#   -d to append the date to the note name
+#   -t to append unix epoch time as a unique timestamp to the note name
+#
+#   file defaults to "note" if left blank
 #
 ###
 
-NOTES=~/Documents/notes/
-DATE=$(date +%Y_%m_%d)
-STAMP=$(date +%s)
+DIR=~/Documents/notes/
+name=note
+date=''
+stamp=''
 
 for arg in "$@"
 do
   case "$arg" in
-    "-l" ) list=true
+    "-l" ) ls -1 $DIR; exit 0
       ;;
-    "-d" ) date=true
+    "-d" ) date=_$(date +%Y_%m_%d)
       ;;
-    "-t" ) timestamp=true
+    "-t" ) stamp=_$(date +%s)
       ;;
-    * )    name=$arg
+    * )    if [[ "$name" == note ]]; then name=$arg; fi
   esac
 done
 
-if [ "$list" ]; then
-  cd $NOTES
-  for itm in *
-  do
-    echo $itm
-  done
-  exit 0
+# if all defaults are still on, then force a date
+if [[ "$name" == note && "$date" == "" && "$stamp" == "" ]]; then
+  date=_$(date +%Y_%m_%d)
 fi
 
-# if no file name is given then default to note_${DATE}
-if [[ "$name" == "" ]]; then
-  file=${NOTES}note_${DATE}
-else
-  file=${NOTES}${name}
-  if [ "$date" ]; then
-    file=${file}_${DATE_SET}
-  fi
-  if [ "$timestamp" ]; then
-    file=${file}_${STAMP_SET}
-  fi
-fi
-
-$EDITOR $file
+$EDITOR ${DIR}${name}${date}${stamp}
 
 exit 0
