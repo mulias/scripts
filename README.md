@@ -1,4 +1,4 @@
-﻿scripts
+scripts
 =======
 
 Things I write as I need them, things that don't go anywhere else.
@@ -12,14 +12,12 @@ i3statusbar.sh
 My status line, which is passed into i3 as the status bar. Runs an infinite loop every second to rebuild the string out of info from basic system calls. 
 	
 note  
-In progress. Used to create text files in a set directory for the purpose of writing quick notes. Defaults to note_year_month_date, so that notes remain organized despite my best efforts. Also has options for listing all notes, opening notes with a unique name (no stamp), and notes with a timestamp in second.
+Write and organize quick notes. Calling `note` with no arguments creates a generic file named “note” plus the current date, such as “note_2014_07_13”. Arguments can list all created notes, make a note with a specific name, append a date, time, and/or unix timestamp.  
+The file note_completion is a bash completion script, which can be dropped in to the directory `/etc/bash_completion.d/`. It should provide tab completion for existing files in your notes directory.
+
 
 tpacpi-bat_info  
 Thinkpads have a special battery feature to start/stop charging while the laptop remains plugged in. I have some aliases to use these features, but this script just lists settings info in one place. I have this aliased to “acpi” because it does the same thing with more information.
 
-lsmaybedasha  
-Runs ls, or maybe ls -a. I find that if I ls a directory and find nothing, I automatically try an ls -a to look for hidden folders. Now I can make dumb robots do that for me.
-
-Todo
-----
-* finish note v1.0
+lsdasha  
+A wrapper that runs a normal `ls` to list the contents of a directory, and then tries `ls -a` to find hidden files, if the directory seems empty. Saves me five entire keystrokes. 
