@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Make and edit a new plain text file in the notes directory
 #
@@ -8,10 +8,12 @@
 #   -d to append the date to the note name
 #   -t to append unix epoch time as a unique timestamp to the note name
 #
-#   file defaults to "note" if left blank
+#   FILE defaults to "note" if left blank
+#   Running `note` with no arguments defaults to `note -d note`
 #
 ###
 
+EDITOR=vim
 DIR=~/Documents/notes/
 name=note
 date=''

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # lists thinkpad battery settings changed by tpacpi-bat
 #

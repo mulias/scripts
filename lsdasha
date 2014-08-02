@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # if there is visible stuff in the directory, just run ls
 # if there is no visible stuff, run ls -a
