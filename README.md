@@ -20,4 +20,4 @@ tpacpi-bat_info
 Thinkpads have a special battery feature to start/stop charging while the laptop remains plugged in. I have some aliases to use these features, but this script just lists settings info in one place. I have this aliased to “acpi” because it does the same thing with more information.
 
 lsdasha  
-A wrapper that runs a normal `ls` to list the contents of a directory, and then tries `ls -a` to find hidden files, if the directory seems empty. Saves me five entire keystrokes. 
+A wrapper that runs a normal `ls` to list the contents of a directory, and then if the directory seems empty tries `ls -a` to find hidden files. Saves me five entire keystrokes. 
