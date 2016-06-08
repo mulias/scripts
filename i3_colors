@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+# colors = Hash.new()
+# 
+# colors['focused']   = {'border'     => '#285577',
+#                        'background' => '#285577',
+#                        'text'       => '#ffffff',
+#                        'indicator'  => '#285577' }
+# 
+# colors['inactive']  = {'border'     => '#000000',
+#                        'background' => '#000000',
+#                        'text'       => '#ffffff',
+#                        'indicator'  => '#000000' }
+# 
+# colors['unfocused'] = {'border'     => '#333333',
+#                        'background' => '#333333',
+#                        'text'       => '#bbbbbb',
+#                        'indicator'  => '#333333' }
+# 
+# colors['urgent']    = {'border'     => '#900000',
+#                        'background' => '#900000',
+#                        'text'       => '#ffffff',
+#                        'indicator'  => '#900000' }
+
+require 'yaml'
+colors = YAML.load_file("#{Dir.home}/.config/i3/i3_colors.yaml")["colors"]
+
+
+if (arg1 = ARGV[0]) && (arg2 = ARGV[1]) && colors[arg1] && colors[arg1][arg2]
+  puts colors[arg1][arg2]
+  exit(0)
+else
+  exit(1)
+end
