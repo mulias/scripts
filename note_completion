@@ -1,9 +1,12 @@
+if [[ -n ${ZSH_VERSION-} ]]; then
+    autoload -U +X bashcompinit && bashcompinit
+fi
 _note_dir()
 {
-        local cur
-
-        COMPREPLY=()
-        cur=${COMP_WORDS[COMP_CWORD]}
-        COMPREPLY=($( compgen -W "$(ls ~/Documents/notes/)" -- $cur ) )
+    local cur
+     
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($( compgen -W "$(ls ~/Documents/notes/)" -- $cur ) )
 }
 complete -F _note_dir note
