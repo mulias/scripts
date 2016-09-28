@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# if arg is set, get the current window and set as grabbed window
+# otherwise, go to the grabbed window, if such a window exists
+
+if [ "$1" == "-set" ]; then
+  wmctrl -a :ACTIVE: -v 2>&1 | grep "Using window: " | awk "{print \$3}" > /tmp/grabwindow
+elif [ -f /tmp/grabwindow ]; then
+  wmctrl -i -a $(cat /tmp/grabwindow)
+fi
